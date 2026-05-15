@@ -1,6 +1,6 @@
 import { ArrowRight, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import heroImage from "../../../../public/hero.png";
+import heroImage from "../../../assets/hero.png";
 
 const ShoppingCartHero = () => {
   const navigate = useNavigate();

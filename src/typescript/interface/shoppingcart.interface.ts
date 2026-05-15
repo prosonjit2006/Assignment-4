@@ -5,12 +5,25 @@ export interface ProductType {
   category: string;
   price: number;
   rating: number;
+  thumbnail: string;
+}
+
+export interface CartProductType {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  rating: number;
+  thumbnail: string;
+  quantity: number;
 }
 
 export interface ShoppingCartInitialDataType {
   isLoading: boolean;
   isError: string | null;
   products: ProductType[];
+  cart: CartProductType[]
 }
 
 export interface ProductPayload {
@@ -20,12 +33,14 @@ export interface ProductPayload {
   category: string;
   price: number;
   rating: number;
+  thumbnail: string
 }
 
 export interface productContexttype {
-  products: ShoppingCartInitialDataType;
-  addToCart: (data: ProductPayload) => Promise<any>;
-  add: (id: number) => Promise<any>;
-  remove: (id: number) => Promise<any>;
-  deleteProduct: (id: number) => Promise<any>;
+  state: ShoppingCartInitialDataType;
+  fetchProductList: ()=> Promise<any>
+  addToCart: (data: ProductPayload) => void
+  incriseQnt: (id: number) => void
+  decriseQnt: (id: number) => void
+  deleteProduct: (id: number) => void
 }

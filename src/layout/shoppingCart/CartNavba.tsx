@@ -1,15 +1,15 @@
 import { Menu, ShoppingCart, X } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import logo from "../../../public/logo.png";
+import logo from "../../assets/logo.png";
 import { cartItems } from "../../services/json/cartItems.json";
+import ShoppingCartContext from "../../context/shoppingcart/ShoppingCartContext";
 
 const CartNavbar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
-  // later this will come from context/redux
-  const cartCount = 33;
+  const ProductContext = useContext(ShoppingCartContext)
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-neutral-200/80 bg-white/10 backdrop-blur-md">
@@ -61,7 +61,7 @@ const CartNavbar = () => {
             <ShoppingCart className="h-6 w-6 text-orange-800" />
 
             <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-yellow-400 text-xs font-bold text-black">
-              {cartCount}
+              {ProductContext?.state.cart.length}
             </span>
           </button>
 

@@ -1,42 +1,21 @@
 import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
-
-const cartProducts = [
-  {
-    id: 1,
-    title: "Essence Mascara Lash Princess",
-    description: "Volumizing and lengthening mascara for dramatic lashes.",
-    price: 9.99,
-    quantity: 2,
-    thumbnail:
-      "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
-  },
-
-  {
-    id: 2,
-    title: "Luxury Skin Serum",
-    description: "Premium skincare serum for glowing and healthy skin.",
-    price: 24.99,
-    quantity: 1,
-    thumbnail:
-      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1200&auto=format&fit=crop",
-  },
-
-  {
-    id: 3,
-    title: "Modern Perfume Collection",
-    description: "Elegant fragrance collection with modern aesthetics.",
-    price: 39.99,
-    quantity: 3,
-    thumbnail:
-      "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1200&auto=format&fit=crop",
-  },
-];
+import { useContext } from "react";
+import ShoppingCartContext from "../../context/shoppingcart/ShoppingCartContext";
 
 const Cart = () => {
-  const subtotal = cartProducts.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0,
-  );
+  const ProductContext = useContext(ShoppingCartContext);
+
+  console.log("response in cart", ProductContext?.state.cart);
+
+  const subtotal =
+    ProductContext?.state.cart.reduce(
+      (acc, item) => acc + item.price * (item.quantity ?? 1),
+      0,
+    ) || 0;
+
+  const shipping = subtotal > 100 ? 0 : 10;
+  const tax = subtotal * 0.1;
+  const total = subtotal + shipping + tax;
 
   return (
     <section className="min-h-screen bg-[#f8f5f2] py-20">
@@ -63,7 +42,7 @@ const Cart = () => {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[2fr_1fr]">
           {/* LEFT SIDE */}
           <div className="space-y-6">
-            {cartProducts.map((product) => (
+            {ProductContext?.state?.cart?.map((product) => (
               <div
                 key={product.id}
                 className="flex flex-col gap-6 rounded-[28px] bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-xl sm:flex-row"
@@ -97,7 +76,10 @@ const Cart = () => {
                   <div className="mt-6 flex flex-wrap items-center justify-between gap-5">
                     {/* QUANTITY */}
                     <div className="flex items-center rounded-full border border-neutral-200 bg-neutral-50 p-2">
-                      <button className="rounded-full p-2 transition hover:bg-orange-100 hover:text-orange-500">
+                      <button
+                        onClick={() => ProductContext.decriseQnt(product.id)}
+                        className="rounded-full p-2 transition hover:bg-orange-100 hover:text-orange-500"
+                      >
                         <Minus className="h-5 w-5" />
                       </button>
 
@@ -105,13 +87,19 @@ const Cart = () => {
                         {product.quantity}
                       </span>
 
-                      <button className="rounded-full p-2 transition hover:bg-orange-100 hover:text-orange-500">
+                      <button
+                        onClick={() => ProductContext.incriseQnt(product.id)}
+                        className="rounded-full p-2 transition hover:bg-orange-100 hover:text-orange-500"
+                      >
                         <Plus className="h-5 w-5" />
                       </button>
                     </div>
 
                     {/* DELETE BUTTON */}
-                    <button className="flex items-center gap-2 rounded-full bg-red-50 px-5 py-3 text-sm font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white">
+                    <button
+                      onClick={() => ProductContext.deleteProduct(product.id)}
+                      className="flex items-center gap-2 rounded-full bg-red-50 px-5 py-3 text-sm font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
+                    >
                       <Trash2 className="h-4 w-4" />
                       Remove
                     </button>
@@ -128,20 +116,47 @@ const Cart = () => {
             </h2>
 
             <div className="mt-8 space-y-5">
+              {/* PRODUCTS */}
               <div className="flex items-center justify-between">
                 <span className="text-neutral-600">Products</span>
 
                 <span className="font-bold text-neutral-900">
-                  {cartProducts.length}
+                  {ProductContext?.state.cart.length}
                 </span>
               </div>
 
+              {/* SUBTOTAL */}
+              <div className="flex items-center justify-between">
+                <span className="text-neutral-600">Subtotal</span>
+
+                <span className="font-bold text-neutral-900">
+                  ${subtotal.toFixed(2)}
+                </span>
+              </div>
+
+              {/* SHIPPING */}
               <div className="flex items-center justify-between">
                 <span className="text-neutral-600">Shipping</span>
 
-                <span className="font-bold text-green-500">Free</span>
+                <span
+                  className={`font-bold ${
+                    shipping === 0 ? "text-green-500" : "text-neutral-900"
+                  }`}
+                >
+                  {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
+                </span>
               </div>
 
+              {/* TAX */}
+              <div className="flex items-center justify-between">
+                <span className="text-neutral-600">Tax (10%)</span>
+
+                <span className="font-bold text-neutral-900">
+                  ${tax.toFixed(2)}
+                </span>
+              </div>
+
+              {/* TOTAL */}
               <div className="border-t border-dashed border-neutral-200 pt-5">
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-bold text-neutral-900">
@@ -149,7 +164,7 @@ const Cart = () => {
                   </span>
 
                   <span className="text-3xl font-black text-orange-500">
-                    ${subtotal.toFixed(2)}
+                    ${total.toFixed(2)}
                   </span>
                 </div>
               </div>

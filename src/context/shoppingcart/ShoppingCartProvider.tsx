@@ -1,42 +1,84 @@
-import { useReducer, type ReactNode } from "react"
-import { shoppingcartInitialData, shoppingcartReducer } from "../../reducer/shoppingcart.reducer";
+import { useReducer, type ReactNode } from "react";
+import {
+  shoppingcartInitialData,
+  shoppingcartReducer,
+} from "../../reducer/shoppingcart.reducer";
 import type { ProductPayload } from "../../typescript/interface/shoppingcart.interface";
-
+import ShoppingCartContext from "./ShoppingCartContext";
+import { getErrorMessage } from "../../services/helper/global.helper";
+import { fetchProductListfns } from "../../api/function/shoppingcart.function";
+import { toast } from "sonner";
 
 const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
+  const [state, dispatchProductsData] = useReducer(
+    shoppingcartReducer,
+    shoppingcartInitialData,
+  );
 
-    const [products, dispatchProducts] = useReducer(shoppingcartReducer, shoppingcartInitialData);
-
-    const addToCart = async(data: ProductPayload) => {
-        dispatchProducts({type: 'START_FETCHING'})
-        console.log('response in addtoCart', data)
-        // try block
+  const fetchProductList = async () => {
+    dispatchProductsData({ type: "START_FETCHING" });
+    try {
+      const res = await fetchProductListfns();
+      dispatchProductsData({ type: "SUCCESS_FETCHING", payload: res  });
+      // console.log('rse', res)
+      return res;
+    } catch (error) {
+      const err = getErrorMessage(error);
+      dispatchProductsData({ type: "FAILED_FETCHING", payload: err });
+      return err;
     }
+  };
 
-    const add = async(id: number) => {
+  const addToCart = (data: ProductPayload) => {
+    dispatchProductsData({
+      type: "SUCCESS_ADD_TO_CART",
+      payload: data,
+    });
 
-    }
+    toast.success("Product added in cart");
+  };
 
-    const remove = async(id: number) => {
+  const incriseQnt = (id: number) => {
+    dispatchProductsData({
+      type: "INCREASE_QUANTITY",
+      payload: id,
+    });
 
-    }
+    toast.success("Product quantity increased");
+  };
 
-    const deleteProduct = async(id: number) => {
+  const decriseQnt = (id: number) => {
+    dispatchProductsData({
+      type: "DECREASE_QUANTITY",
+      payload: id,
+    });
 
-    }
+    toast.success("Product quantity decreased");
+  };
 
+  const deleteProduct = (id: number) => {
+    dispatchProductsData({
+      type: "REMOVE_PRODUCT",
+      payload: id,
+    });
+
+    toast.success("Product removed from cart");
+  };
 
   return (
-    <ShoppingCartProvider value={{
-        products,
+    <ShoppingCartContext
+      value={{
+        state,
+        fetchProductList,
         addToCart,
-        add,
-        remove,
-        deleteProduct
-    }}>
-        {children}
-    </ShoppingCartProvider>
-  )
+        incriseQnt,
+        decriseQnt,
+        deleteProduct,
+      }}
+    >
+      {children}
+    </ShoppingCartContext>
+  );
 };
 
-export default ShoppingCartProvider
+export default ShoppingCartProvider;
