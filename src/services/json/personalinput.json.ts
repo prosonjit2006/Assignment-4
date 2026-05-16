@@ -28,20 +28,10 @@ export const personalDetailsInput = [
     required: false,
   },
   {
-    name: "message",
+    name: "personalMessage",
     label: "Meassage",
     palceholder: "Write Message ",
     type: "text",
     required: false,
   },
 ];
-
-/*
-
-<TextField
-          required
-          id="outlined-required"
-          label="Required"
-          defaultValue="Hello World"
-        />
-*/

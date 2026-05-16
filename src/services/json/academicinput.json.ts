@@ -1,13 +1,13 @@
 export const academicDetailsInput = [
   {
-    name: "10th",
+    name: "tenth",
     label: "10th",
     palceholder: "Enter your 10th percentage",
     type: "number",
     required: true,
   },
   {
-    name: "12th",
+    name: "twelfth",
     label: "12th",
     palceholder: "Enter your 12th percentage",
     type: "number",
@@ -35,4 +35,3 @@ export const academicDetailsInput = [
     required: false,
   },
 ];
-

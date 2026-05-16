@@ -8,5 +8,5 @@ export const personalDetailsSchema = yup.object({
     .email("Enter a valid email")
     .required("Email is required"),
   Phone: yup.number().optional(),
-  message: yup.string().optional(),
+  personalMessage: yup.string().optional(),
 });

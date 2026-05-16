@@ -28,7 +28,7 @@ export const addressDetailsInput = [
     required: false,
   },
   {
-    name: "message",
+    name: "addressMessage",
     label: "Meassage",
     palceholder: "Write Message ",
     type: "text",
