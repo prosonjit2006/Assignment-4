@@ -83,7 +83,7 @@ export const shoppingcartReducer = (
           item.id === action.payload
             ? {
                 ...item,
-                quantity: item.quantity + 1,
+                quantity: item.quantity < 10 ? item.quantity + 1 : 10,
               }
             : item,
         ),
@@ -97,7 +97,7 @@ export const shoppingcartReducer = (
           item.id === action.payload
             ? {
                 ...item,
-                quantity: item.quantity - 1,
+                quantity:  item.quantity > 1 ? item.quantity - 1 : 1
               }
             : item,
         ),

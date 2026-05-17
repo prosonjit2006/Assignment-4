@@ -41,17 +41,83 @@ const Cart = () => {
         {/* MAIN GRID */}
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[2fr_1fr]">
           {/* LEFT SIDE */}
-          <div className="space-y-6">
-            {ProductContext?.state?.cart?.map((product) => (
-              <div
-                key={product.id}
-                className="flex flex-col gap-6 rounded-[28px] bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-xl sm:flex-row"
-              >
+          <div className="max-h-[580px] space-y-6 overflow-y-auto pr-2">
+
+            {ProductContext?.state?.cart?.length ?? 0 ? (
+              // real products 
+              ProductContext?.state?.cart?.map((product) => (
+                <div
+                  key={product.id}
+                  className="flex flex-col gap-6 rounded-[28px] bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-xl sm:flex-row"
+                >
+                  {/* IMAGE */}
+                  <div className="overflow-hidden rounded-3xl">
+                    <img
+                      src={product.thumbnail}
+                      alt={product.title}
+                      className="h-[220px] w-full object-cover sm:w-[220px]"
+                    />
+                  </div>
+
+                  {/* CONTENT */}
+                  <div className="flex flex-1 flex-col justify-between">
+                    <div>
+                      <h2 className="text-2xl font-black text-neutral-900">
+                        {product.title}
+                      </h2>
+
+                      <p className="mt-3 text-sm leading-7 text-neutral-600">
+                        {product.description}
+                      </p>
+
+                      <h3 className="mt-5 text-3xl font-black text-orange-500">
+                        ${product.price}
+                      </h3>
+                    </div>
+
+                    {/* ACTIONS */}
+                    <div className="mt-6 flex flex-wrap items-center justify-between gap-5">
+                      {/* QUANTITY */}
+                      <div className="flex items-center rounded-full border border-neutral-200 bg-neutral-50 p-2">
+                        <button
+                          onClick={() => ProductContext.decriseQnt(product.id)}
+                          className="rounded-full p-2 transition hover:bg-orange-100 hover:text-orange-500"
+                        >
+                          <Minus className="h-5 w-5" />
+                        </button>
+
+                        <span className="min-w-[40px] text-center text-lg font-bold text-neutral-900">
+                          {product.quantity}
+                        </span>
+
+                        <button
+                          onClick={() => ProductContext.incriseQnt(product.id)}
+                          className="rounded-full p-2 transition hover:bg-orange-100 hover:text-orange-500"
+                        >
+                          <Plus className="h-5 w-5" />
+                        </button>
+                      </div>
+
+                      {/* DELETE BUTTON */}
+                      <button
+                        onClick={() => ProductContext.deleteProduct(product.id)}
+                        className="flex items-center gap-2 rounded-full bg-red-50 px-5 py-3 text-sm font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              // demo products
+              <div className="flex flex-col gap-6 rounded-[28px] bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-xl sm:flex-row">
                 {/* IMAGE */}
                 <div className="overflow-hidden rounded-3xl">
                   <img
-                    src={product.thumbnail}
-                    alt={product.title}
+                    // src={demoimg}
+                    alt="demo img"
                     className="h-[220px] w-full object-cover sm:w-[220px]"
                   />
                 </div>
@@ -60,15 +126,15 @@ const Cart = () => {
                 <div className="flex flex-1 flex-col justify-between">
                   <div>
                     <h2 className="text-2xl font-black text-neutral-900">
-                      {product.title}
+                      Demo Product
                     </h2>
 
                     <p className="mt-3 text-sm leading-7 text-neutral-600">
-                      {product.description}
+                      Product description
                     </p>
 
                     <h3 className="mt-5 text-3xl font-black text-orange-500">
-                      ${product.price}
+                      $00
                     </h3>
                   </div>
 
@@ -77,18 +143,18 @@ const Cart = () => {
                     {/* QUANTITY */}
                     <div className="flex items-center rounded-full border border-neutral-200 bg-neutral-50 p-2">
                       <button
-                        onClick={() => ProductContext.decriseQnt(product.id)}
+                        // onClick={() => ProductContext.decriseQnt(product.id)}
                         className="rounded-full p-2 transition hover:bg-orange-100 hover:text-orange-500"
                       >
                         <Minus className="h-5 w-5" />
                       </button>
 
                       <span className="min-w-[40px] text-center text-lg font-bold text-neutral-900">
-                        {product.quantity}
+                        0
                       </span>
 
                       <button
-                        onClick={() => ProductContext.incriseQnt(product.id)}
+                        // onClick={() => ProductContext.incriseQnt(product.id)}
                         className="rounded-full p-2 transition hover:bg-orange-100 hover:text-orange-500"
                       >
                         <Plus className="h-5 w-5" />
@@ -97,7 +163,7 @@ const Cart = () => {
 
                     {/* DELETE BUTTON */}
                     <button
-                      onClick={() => ProductContext.deleteProduct(product.id)}
+                      // onClick={() => ProductContext.deleteProduct(product.id)}
                       className="flex items-center gap-2 rounded-full bg-red-50 px-5 py-3 text-sm font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -106,7 +172,7 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            )}
           </div>
 
           {/* RIGHT SIDE */}

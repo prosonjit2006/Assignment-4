@@ -19,7 +19,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
     dispatchProductsData({ type: "START_FETCHING" });
     try {
       const res = await fetchProductListfns();
-      dispatchProductsData({ type: "SUCCESS_FETCHING", payload: res  });
+      dispatchProductsData({ type: "SUCCESS_FETCHING", payload: res });
       // console.log('rse', res)
       return res;
     } catch (error) {
@@ -44,7 +44,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
       payload: id,
     });
 
-    toast.success("Product quantity increased");
+    // toast.success("Product quantity increased");
   };
 
   const decriseQnt = (id: number) => {
@@ -53,7 +53,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
       payload: id,
     });
 
-    toast.success("Product quantity decreased");
+    // toast.success("Product quantity decreased");
   };
 
   const deleteProduct = (id: number) => {
