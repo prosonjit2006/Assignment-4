@@ -8,7 +8,7 @@ const CartFooter = () => {
   return (
     <footer className="border-t border-neutral-200 bg-[#f8f5f2]">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
-        {/* BRAND SECTION */}
+        {/* brand section*/}
         <div>
           <Link to="/shoppingcart" className="flex items-center gap-3">
             <img
@@ -25,7 +25,7 @@ const CartFooter = () => {
             and everyday confidence.
           </p>
 
-          {/* SOCIAL ICONS */}
+          {/* social icons */}
           <div className="mt-6 flex items-center gap-4">
             <button className="rounded-full bg-white p-3 text-neutral-700 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-orange-500 hover:text-white">
               <FaFacebook className="h-5 w-5" />
@@ -45,7 +45,7 @@ const CartFooter = () => {
           </div>
         </div>
 
-        {/* QUICK LINKS */}
+        {/* quick links */}
         <div>
           <h3 className="text-lg font-bold text-neutral-900">Quick Links</h3>
 
@@ -73,7 +73,7 @@ const CartFooter = () => {
           </div>
         </div>
 
-        {/* SUPPORT */}
+        {/* support part  */}
         <div>
           <h3 className="text-lg font-bold text-neutral-900">Support</h3>
 
@@ -92,7 +92,7 @@ const CartFooter = () => {
           </div>
         </div>
 
-        {/* NEWSLETTER */}
+        {/* newslatter */}
         <div>
           <h3 className="text-lg font-bold text-neutral-900">Stay Updated</h3>
 
@@ -100,7 +100,7 @@ const CartFooter = () => {
             Subscribe for new arrivals, exclusive offers, and fashion updates.
           </p>
 
-          {/* INPUT */}
+          {/* input */}
           <div className="mt-5 flex flex-col gap-3">
             <input
               type="email"
@@ -115,15 +115,12 @@ const CartFooter = () => {
         </div>
       </div>
 
-      {/* BOTTOM BAR */}
+      {/* bottom bar */}
       <div className="border-t border-neutral-200">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-5 text-center sm:px-6 md:flex-row lg:px-8">
           <p className="text-sm text-neutral-500">
             © 2026{" "}
-            <a href="/shoppingcart" className="hover:text-orange-600">
-              StyleCart
-            </a>
-            . All rights reserved.
+            <a href="/shoppingcart" className="hover:text-orange-600"> StyleCart </a> . All rights reserved.
           </p>
 
           <p className="text-sm text-neutral-500">

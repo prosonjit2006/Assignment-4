@@ -15,7 +15,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <div className="group overflow-hidden rounded-[28px] bg-white shadow-sm transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl">
-      {/* IMAGE */}
+      {/* image */}
       <div className="relative overflow-hidden">
         <button className="absolute right-4 top-4 z-20 rounded-full bg-white/90 p-3 shadow-md backdrop-blur-md transition hover:bg-orange-500 hover:text-white">
           <Heart className="h-5 w-5" />
@@ -32,7 +32,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
       </div>
 
-      {/* CONTENT */}
+      {/* content */}
       <div className="p-6">
         <div className="mb-3 flex items-center gap-2">
           <Star className="h-4 w-4 fill-orange-400 text-orange-400" />

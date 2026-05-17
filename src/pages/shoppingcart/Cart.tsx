@@ -13,15 +13,15 @@ const Cart = () => {
       0,
     ) || 0;
 
-  const shipping = subtotal > 49 ? 0 : 10;
+  const shipping = subtotal > 11 ? 0 : 10;
   const tax = subtotal * 0.1;
   const total = subtotal + shipping + tax;
 
   return (
     <section className="h-fit bg-[#f8f5f2] py-20">
-      {/* CONTAINER */}
+      {/* container */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* HEADER */}
+        {/* header */}
         <div className="mb-14 text-center">
           <div className="mb-4 flex justify-center">
             <div className="rounded-full bg-orange-100 p-4 text-orange-500">
@@ -49,17 +49,17 @@ const Cart = () => {
           )}
         </div>
 
-        {/* MAIN GRID */}
+        {/* main grid */}
         {(ProductContext?.state.cart.length ?? 0) ? (
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[2fr_1fr]">
-            {/* LEFT SIDE */}
+            {/* left side */}
             <div className="max-h-[580px] space-y-6 overflow-y-auto pr-2">
               {ProductContext?.state?.cart?.map((product) => (
                 <div
                   key={product.id}
                   className="flex flex-col gap-6 rounded-[28px] bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-xl sm:flex-row"
                 >
-                  {/* IMAGE */}
+                  {/* image */}
                   <div className="overflow-hidden rounded-3xl">
                     <img
                       src={product.thumbnail}
@@ -68,7 +68,7 @@ const Cart = () => {
                     />
                   </div>
 
-                  {/* CONTENT */}
+                  {/* content */}
                   <div className="flex flex-1 flex-col justify-between">
                     <div>
                       <h2 className="text-2xl font-black text-neutral-900">
@@ -84,9 +84,9 @@ const Cart = () => {
                       </h3>
                     </div>
 
-                    {/* ACTIONS */}
+                    {/* actions */}
                     <div className="mt-6 flex flex-wrap items-center justify-between gap-5">
-                      {/* QUANTITY */}
+                      {/* quantity */}
                       <div className="flex items-center rounded-full border border-neutral-200 bg-neutral-50 p-2">
                         <button
                           onClick={() => ProductContext.decriseQnt(product.id)}
@@ -107,7 +107,7 @@ const Cart = () => {
                         </button>
                       </div>
 
-                      {/* DELETE BUTTON */}
+                      {/* delete button */}
                       <button
                         onClick={() => ProductContext.deleteProduct(product.id)}
                         className="flex items-center gap-2 rounded-full bg-red-50 px-5 py-3 text-sm font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
@@ -121,14 +121,14 @@ const Cart = () => {
               ))}
             </div>
 
-            {/* RIGHT SIDE */}
+            {/* right side */}
             <div className="h-fit rounded-[32px] bg-white p-8 shadow-sm">
               <h2 className="text-2xl font-black text-neutral-900">
                 Order Summary
               </h2>
 
               <div className="mt-8 space-y-5">
-                {/* PRODUCTS */}
+                {/* products */}
                 <div className="flex items-center justify-between">
                   <span className="text-neutral-600">Products</span>
 
@@ -137,7 +137,7 @@ const Cart = () => {
                   </span>
                 </div>
 
-                {/* SUBTOTAL */}
+                {/* subtotal */}
                 <div className="flex items-center justify-between">
                   <span className="text-neutral-600">Subtotal</span>
 
@@ -146,7 +146,7 @@ const Cart = () => {
                   </span>
                 </div>
 
-                {/* SHIPPING */}
+                {/* shipping */}
                 <div className="flex items-center justify-between">
                   <span className="text-neutral-600">Shipping</span>
 
@@ -159,7 +159,7 @@ const Cart = () => {
                   </span>
                 </div>
 
-                {/* TAX */}
+                {/* tax */}
                 <div className="flex items-center justify-between">
                   <span className="text-neutral-600">Tax (10%)</span>
 
@@ -168,7 +168,7 @@ const Cart = () => {
                   </span>
                 </div>
 
-                {/* TOTAL */}
+                {/* total */}
                 <div className="border-t border-dashed border-neutral-200 pt-5">
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-bold text-neutral-900">
@@ -182,7 +182,7 @@ const Cart = () => {
                 </div>
               </div>
 
-              {/* CHECKOUT BUTTON */}
+              {/* checkout button */}
               <button className="mt-8 w-full rounded-full bg-orange-500 px-6 py-4 text-sm font-bold text-white transition-all duration-300 hover:bg-orange-600 hover:shadow-xl">
                 Proceed To Checkout
               </button>

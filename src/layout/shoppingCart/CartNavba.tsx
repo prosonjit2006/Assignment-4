@@ -9,7 +9,7 @@ const CartNavbar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
-  const ProductContext = useContext(ShoppingCartContext)
+  const ProductContext = useContext(ShoppingCartContext);
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-neutral-200/80 bg-white/10 backdrop-blur-md">
@@ -27,7 +27,7 @@ const CartNavbar = () => {
           </h1>
         </Link>
 
-        {/* DESKTOP NAVLINKS */}
+        {/* desktop navlinks */}
         <div className="hidden items-center gap-3 md:flex">
           {cartItems.map((item) => (
             <NavLink
@@ -51,9 +51,9 @@ const CartNavbar = () => {
           ))}
         </div>
 
-        {/* RIGHT SIDE */}
+        {/* right side */}
         <div className="flex items-center gap-4">
-          {/* CART ICON */}
+          {/* cart icon */}
           <button
             onClick={() => navigate("/shoppingcart/cart")}
             className="relative rounded-full p-2 transition hover:bg-orange-100"
@@ -65,7 +65,7 @@ const CartNavbar = () => {
             </span>
           </button>
 
-          {/* MOBILE MENU BUTTON */}
+          {/* mobile manu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="rounded-full p-2 transition hover:bg-neutral-100 md:hidden"
@@ -79,7 +79,7 @@ const CartNavbar = () => {
         </div>
       </div>
 
-      {/* MOBILE MENU */}
+      {/* mobile menu */}
       <div
         className={`
           overflow-hidden transition-all duration-300 md:hidden

@@ -24,9 +24,7 @@ export default function HorizontalLinearStepper() {
 
   const { state, handleNext, handlePrevious, updateField } = wizardcontext;
 
-  // ============================================
-  // GET CURRENT STEP FIELDS
-  // ============================================
+  //  get current step fields
 
   const getCurrentFields = () => {
     switch (state.step) {
@@ -44,9 +42,7 @@ export default function HorizontalLinearStepper() {
     }
   };
 
-  // ============================================
-  // PREVIEW SECTION
-  // ============================================
+  //  preview section
 
   const allFields = [
     ...personalDetailsInput,
@@ -69,19 +65,45 @@ export default function HorizontalLinearStepper() {
             sx={{
               display: "flex",
               justifyContent: "space-between",
+              alignItems: {
+                xs: "flex-start",
+                sm: "center",
+              },
+              flexDirection: {
+                xs: "column",
+                sm: "row",
+              },
+              gap: 1,
               borderBottom: "1px solid #e5e7eb",
               paddingBottom: 1,
+              wordBreak: "break-word",
             }}
           >
             <Typography
               sx={{
                 fontWeight: 600,
+                fontSize: {
+                  xs: "14px",
+                  sm: "16px",
+                },
               }}
             >
               {field.label}
             </Typography>
 
-            <Typography>
+            <Typography
+              sx={{
+                textAlign: {
+                  xs: "left",
+                  sm: "right",
+                },
+                width: "100%",
+                fontSize: {
+                  xs: "14px",
+                  sm: "16px",
+                },
+              }}
+            >
               {state.formData[field.name as keyof typeof state.formData]}
             </Typography>
           </Box>
@@ -90,9 +112,7 @@ export default function HorizontalLinearStepper() {
     );
   };
 
-  // ============================================
-  // FINAL SUBMIT
-  // ============================================
+  // final submit
 
   const handleFinalSubmit = () => {
     console.log(state.formData);
@@ -111,31 +131,58 @@ export default function HorizontalLinearStepper() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        padding: 2,
+
+        // responsive container padding
+        padding: {
+          xs: 1.5,
+          sm: 2,
+          md: 3,
+        },
       }}
     >
       <Box
         sx={{
           width: "100%",
-          maxWidth: "850px",
+
+          // fixed responsive width issue
+          maxWidth: {
+            xs: "100%",
+            sm: "700px",
+            md: "900px",
+          },
+
           backgroundColor: "white",
-          borderRadius: "20px",
+          borderRadius: {
+            xs: "14px",
+            md: "20px",
+          },
+
           padding: {
-            xs: "25px",
+            xs: "18px",
+            sm: "25px",
             md: "40px",
           },
+
           boxShadow: "0px 10px 40px rgba(0,0,0,0.08)",
+          overflow: "hidden",
         }}
       >
-        {/* HEADER */}
+        {/* header */}
 
-        <Box sx={{ mb: 5 }}>
+        <Box sx={{ mb: { xs: 3, md: 5 } }}>
           <Typography
             variant="h4"
             sx={{
               fontWeight: 700,
               color: "#111827",
               mb: 1,
+
+              // responsive heading
+              fontSize: {
+                xs: "26px",
+                sm: "32px",
+                md: "38px",
+              },
             }}
           >
             Student Registration
@@ -145,23 +192,51 @@ export default function HorizontalLinearStepper() {
             variant="body1"
             sx={{
               color: "#6b7280",
+              fontSize: {
+                xs: "14px",
+                sm: "16px",
+              },
             }}
           >
             Complete all steps to finish your registration
           </Typography>
         </Box>
 
-        {/* STEPPER */}
+        {/* stepper */}
 
-        <Box sx={{ mb: 6 }}>
-          <Stepper activeStep={state.step}>
+        <Box
+          sx={{
+            mb: { xs: 4, md: 6 },
+
+            // allow horizontal scroll on mobile
+            overflowX: "auto",
+
+            // remove scrollbar visibility
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
+        >
+          <Stepper
+            activeStep={state.step}
+            alternativeLabel
+            sx={{
+              minWidth: {
+                xs: "650px",
+                md: "100%",
+              },
+            }}
+          >
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>
                   <Typography
                     sx={{
                       fontWeight: 600,
-                      fontSize: "14px",
+                      fontSize: {
+                        xs: "12px",
+                        sm: "14px",
+                      },
                     }}
                   >
                     {label}
@@ -172,21 +247,30 @@ export default function HorizontalLinearStepper() {
           </Stepper>
         </Box>
 
-        {/* FORM AREA */}
+        {/* form area */}
 
         <Box
           sx={{
             minHeight: "300px",
             border: "1px solid #e5e7eb",
-            borderRadius: "16px",
-            padding: 4,
+            borderRadius: {
+              xs: "12px",
+              md: "16px",
+            },
+
+            padding: {
+              xs: 2,
+              sm: 3,
+              md: 4,
+            },
+
             backgroundColor: "#fafafa",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
           }}
         >
-          {/* STEP TITLE */}
+          {/* step title */}
 
           <Typography
             variant="h5"
@@ -194,6 +278,12 @@ export default function HorizontalLinearStepper() {
               fontWeight: 700,
               mb: 1,
               color: "#111827",
+
+              // responsive title
+              fontSize: {
+                xs: "22px",
+                sm: "28px",
+              },
             }}
           >
             {steps[state.step]}
@@ -203,12 +293,16 @@ export default function HorizontalLinearStepper() {
             sx={{
               color: "#6b7280",
               mb: 4,
+              fontSize: {
+                xs: "14px",
+                sm: "16px",
+              },
             }}
           >
             Fill in the required information.
           </Typography>
 
-          {/* DYNAMIC FORM */}
+          {/* dynamic form */}
 
           {state.step === 3 ? (
             renderPreview()
@@ -234,6 +328,7 @@ export default function HorizontalLinearStepper() {
                   onChange={(e) => updateField(item.name, e.target.value)}
                   required={item.required}
                   variant="outlined"
+                  size="small"
                   sx={{
                     backgroundColor: "white",
 
@@ -255,11 +350,19 @@ export default function HorizontalLinearStepper() {
             </Box>
           )}
 
-          {/* BUTTONS */}
+          {/* buttons */}
 
           <Box
             sx={{
               display: "flex",
+
+              // responsive button layout
+              flexDirection: {
+                xs: "column",
+                sm: "row",
+              },
+
+              gap: 2,
               justifyContent: "space-between",
               mt: 5,
             }}
@@ -268,11 +371,16 @@ export default function HorizontalLinearStepper() {
               disabled={state.step === 0}
               onClick={handlePrevious}
               variant="outlined"
+              fullWidth
               sx={{
                 textTransform: "none",
                 borderRadius: "10px",
                 paddingX: 4,
-                paddingY: 1,
+                paddingY: 1.2,
+                order: {
+                  xs: 2,
+                  sm: 1,
+                },
               }}
             >
               Previous
@@ -282,12 +390,17 @@ export default function HorizontalLinearStepper() {
               <Button
                 onClick={handleFinalSubmit}
                 variant="contained"
+                fullWidth
                 sx={{
                   textTransform: "none",
                   borderRadius: "10px",
                   paddingX: 4,
-                  paddingY: 1,
+                  paddingY: 1.2,
                   backgroundColor: "#16a34a",
+                  order: {
+                    xs: 1,
+                    sm: 2,
+                  },
                 }}
               >
                 Submit
@@ -296,12 +409,17 @@ export default function HorizontalLinearStepper() {
               <Button
                 onClick={handleNext}
                 variant="contained"
+                fullWidth
                 sx={{
                   textTransform: "none",
                   borderRadius: "10px",
                   paddingX: 4,
-                  paddingY: 1,
+                  paddingY: 1.2,
                   backgroundColor: "#111827",
+                  order: {
+                    xs: 1,
+                    sm: 2,
+                  },
                 }}
               >
                 Next

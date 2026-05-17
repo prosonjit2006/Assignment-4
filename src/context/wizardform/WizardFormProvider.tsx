@@ -32,9 +32,8 @@ export const WizardFormProvider = ({ children }: { children: ReactNode }) => {
   }, [state]);
 
   const validateCurrentStep = () => {
-    
     let currentFields: typeof personalDetailsInput = [];
-    
+
     switch (state.step) {
       case 0:
         currentFields = personalDetailsInput;
@@ -96,6 +95,21 @@ export const WizardFormProvider = ({ children }: { children: ReactNode }) => {
       type: "RESET_FORM",
     });
   };
+
+  /*
+   
+  const contextValue = useMemo(
+    () => ({
+      state,
+      handleNext,
+      handlePrevious,
+      updateField,
+      resetForm,
+    }),
+    [state],
+  );
+  
+  */
 
   return (
     <WizardFormContext.Provider
