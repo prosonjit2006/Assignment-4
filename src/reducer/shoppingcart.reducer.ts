@@ -6,7 +6,6 @@ export const shoppingcartInitialData: ShoppingCartInitialDataType = {
   isError: null,
   products: [],
   cart: [],
-  
 };
 
 export const shoppingcartReducer = (
@@ -97,7 +96,7 @@ export const shoppingcartReducer = (
           item.id === action.payload
             ? {
                 ...item,
-                quantity:  item.quantity > 1 ? item.quantity - 1 : 1
+                quantity: item.quantity > 1 ? item.quantity - 1 : 1,
               }
             : item,
         ),

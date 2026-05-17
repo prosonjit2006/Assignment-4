@@ -42,9 +42,8 @@ const Cart = () => {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[2fr_1fr]">
           {/* LEFT SIDE */}
           <div className="max-h-[580px] space-y-6 overflow-y-auto pr-2">
-
-            {ProductContext?.state?.cart?.length ?? 0 ? (
-              // real products 
+            {(ProductContext?.state?.cart?.length ?? 0) ? (
+              // real products
               ProductContext?.state?.cart?.map((product) => (
                 <div
                   key={product.id}
