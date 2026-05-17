@@ -1,56 +1,104 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Container } from "@mui/material";
-import DynamyicInput from "../../components/DynamyicInput";
+import { Container, TextField } from "@mui/material";
+import { useContext } from "react";
+import WizardFormContext from "../../context/wizardform/WizardFormContext";
+// import DynamyicInput from "../../components/DynamyicInput";
 import { personalDetailsInput } from "../../services/json/personalinput.json";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { personalDetailsSchema } from "../../services/validation/persolandetails.validation";
+import { addressDetailsInput } from "../../services/json/addressinput.json";
+import { academicDetailsInput } from "../../services/json/academicinput.json";
+import { toast } from "sonner";
 
-const steps = ["Personal Details", "Address", "Academic Details"];
+const steps = ["Personal Details", "Address", "Academic Details", "Preview"];
 
 export default function HorizontalLinearStepper() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  // const [skipped, setSkipped] = React.useState(new Set<number>());
+  const wizardcontext = useContext(WizardFormContext);
 
-  const {
-    register,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(personalDetailsSchema),
-    defaultValues: {},
-  });
+  if (!wizardcontext) {
+    return null;
+  }
 
-  const isStepOptional = (step: number) => {
-    return step === 1;
+  const { state, handleNext, handlePrevious, updateField } = wizardcontext;
+
+  // ============================================
+  // GET CURRENT STEP FIELDS
+  // ============================================
+
+  const getCurrentFields = () => {
+    switch (state.step) {
+      case 0:
+        return personalDetailsInput;
+
+      case 1:
+        return addressDetailsInput;
+
+      case 2:
+        return academicDetailsInput;
+
+      default:
+        return [];
+    }
   };
 
-  // const isStepSkipped = (step: number) => {
-  //   return skipped.has(step);
-  // };
+  // ============================================
+  // PREVIEW SECTION
+  // ============================================
 
-  const handleNext = () => {
-    // let newSkipped = skipped;
-    // if (isStepSkipped(activeStep)) {
-    //   newSkipped = new Set(newSkipped.values());
-    //   newSkipped.delete(activeStep);
-    // }
+  const allFields = [
+    ...personalDetailsInput,
+    ...addressDetailsInput,
+    ...academicDetailsInput,
+  ];
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    // setSkipped(newSkipped);
+  const renderPreview = () => {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+        }}
+      >
+        {allFields.map((field) => (
+          <Box
+            key={field.name}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              borderBottom: "1px solid #e5e7eb",
+              paddingBottom: 1,
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 600,
+              }}
+            >
+              {field.label}
+            </Typography>
+
+            <Typography>
+              {state.formData[field.name as keyof typeof state.formData]}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+    );
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  // ============================================
+  // FINAL SUBMIT
+  // ============================================
 
-  const handleReset = () => {
-    setActiveStep(0);
+  const handleFinalSubmit = () => {
+    console.log(state.formData);
+
+    toast.success("Form submitted successfully");
+    wizardcontext.resetForm();
   };
 
   return (
@@ -80,6 +128,7 @@ export default function HorizontalLinearStepper() {
         }}
       >
         {/* HEADER */}
+
         <Box sx={{ mb: 5 }}>
           <Typography
             variant="h4"
@@ -103,46 +152,28 @@ export default function HorizontalLinearStepper() {
         </Box>
 
         {/* STEPPER */}
-        <Box sx={{ mb: 6 }}>
-          <Stepper activeStep={activeStep}>
-            {steps.map((label, index) => {
-              const stepProps: { completed?: boolean } = {};
-              const labelProps: {
-                optional?: React.ReactNode;
-              } = {};
 
-              if (isStepOptional(index)) {
-                labelProps.optional = (
+        <Box sx={{ mb: 6 }}>
+          <Stepper activeStep={state.step}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>
                   <Typography
-                    variant="caption"
                     sx={{
-                      color: "#9ca3af",
+                      fontWeight: 600,
+                      fontSize: "14px",
                     }}
                   >
-                    Optional
+                    {label}
                   </Typography>
-                );
-              }
-
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel {...labelProps}>
-                    <Typography
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "14px",
-                      }}
-                    >
-                      {label}
-                    </Typography>
-                  </StepLabel>
-                </Step>
-              );
-            })}
+                </StepLabel>
+              </Step>
+            ))}
           </Stepper>
         </Box>
 
         {/* FORM AREA */}
+
         <Box
           sx={{
             minHeight: "300px",
@@ -155,136 +186,128 @@ export default function HorizontalLinearStepper() {
             justifyContent: "center",
           }}
         >
-          {activeStep === steps.length ? (
-            <React.Fragment>
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: 700,
-                  color: "#16a34a",
-                  mb: 2,
-                }}
-              >
-                Registration Completed
-              </Typography>
+          {/* STEP TITLE */}
 
-              <Typography
-                sx={{
-                  color: "#6b7280",
-                }}
-              >
-                All steps completed successfully.
-              </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 700,
+              mb: 1,
+              color: "#111827",
+            }}
+          >
+            {steps[state.step]}
+          </Typography>
 
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  mt: 4,
-                }}
-              >
-                <Button
-                  onClick={handleReset}
-                  variant="contained"
-                  sx={{
-                    textTransform: "none",
-                    borderRadius: "10px",
-                    paddingX: 4,
-                    backgroundColor: "#111827",
-                  }}
-                >
-                  Reset
-                </Button>
-              </Box>
-            </React.Fragment>
+          <Typography
+            sx={{
+              color: "#6b7280",
+              mb: 4,
+            }}
+          >
+            Fill in the required information.
+          </Typography>
+
+          {/* DYNAMIC FORM */}
+
+          {state.step === 3 ? (
+            renderPreview()
           ) : (
-            <React.Fragment>
-              {/* STEP TITLE */}
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: 700,
-                  mb: 1,
-                  color: "#111827",
-                }}
-              >
-                {steps[activeStep]}
-              </Typography>
-
-              <Typography
-                sx={{
-                  color: "#6b7280",
-                  mb: 4,
-                }}
-              >
-                Fill in the required information for this step.
-              </Typography>
-
-              {/* TEMPORARY FORM PLACEHOLDER */}
-              <Box
-                component="form"
-                // onSubmit={}
-                sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-              >
-                {personalDetailsInput.map((item) => (
-                  <DynamyicInput
-                    key={item.name}
-                    field={item}
-                    register={register}
-                    errors={errors}
-                  />
-                ))}
-
-                <Button
-                  id="submitBTN"
-                  type="submit"
-                  variant="contained"
-                  sx={{ visibility: "hidden" }}
-                >
-                  Save Data
-                </Button>
-                {/* on clicking on the next this btn will tiggared  */}
-              </Box>
-
-              {/* BUTTONS */}
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  mt: 5,
-                }}
-              >
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
+            <Box
+              component="form"
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+              }}
+            >
+              {getCurrentFields().map((item) => (
+                <TextField
+                  key={item.name}
+                  fullWidth
+                  type={item.type}
+                  label={item.label}
+                  placeholder={item.palceholder}
+                  value={
+                    state.formData[item.name as keyof typeof state.formData]
+                  }
+                  onChange={(e) => updateField(item.name, e.target.value)}
+                  required={item.required}
                   variant="outlined"
                   sx={{
-                    textTransform: "none",
-                    borderRadius: "10px",
-                    paddingX: 4,
-                    paddingY: 1,
-                  }}
-                >
-                  Previous
-                </Button>
+                    backgroundColor: "white",
 
-                <Button
-                  // type="submit"
-                  onClick={handleNext}
-                  variant="contained"
-                  sx={{
-                    textTransform: "none",
-                    borderRadius: "10px",
-                    paddingX: 4,
-                    paddingY: 1,
-                    backgroundColor: "#111827",
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "12px",
+                    },
                   }}
-                >
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                </Button>
-              </Box>
-            </React.Fragment>
+                />
+
+                // <DynamyicInput
+                //   key={item.name}
+                //   field={item}
+                //   value={
+                //     state.formData[item.name as keyof typeof state.formData]
+                //   }
+                //   onChange={(e) => updateField(item.name, e.target.value)}
+                // />
+              ))}
+            </Box>
           )}
+
+          {/* BUTTONS */}
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              mt: 5,
+            }}
+          >
+            <Button
+              disabled={state.step === 0}
+              onClick={handlePrevious}
+              variant="outlined"
+              sx={{
+                textTransform: "none",
+                borderRadius: "10px",
+                paddingX: 4,
+                paddingY: 1,
+              }}
+            >
+              Previous
+            </Button>
+
+            {state.step === 3 ? (
+              <Button
+                onClick={handleFinalSubmit}
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  borderRadius: "10px",
+                  paddingX: 4,
+                  paddingY: 1,
+                  backgroundColor: "#16a34a",
+                }}
+              >
+                Submit
+              </Button>
+            ) : (
+              <Button
+                onClick={handleNext}
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  borderRadius: "10px",
+                  paddingX: 4,
+                  paddingY: 1,
+                  backgroundColor: "#111827",
+                }}
+              >
+                Next
+              </Button>
+            )}
+          </Box>
         </Box>
       </Box>
     </Container>

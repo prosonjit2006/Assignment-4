@@ -27,5 +27,12 @@ export interface wizardformInitialDataType {
 }
 
 export interface wizardformcontexttype {
-    state: wizardformInitialDataType
+  state: wizardformInitialDataType;
+
+  handleNext: () => void;
+
+  handlePrevious: () => void;
+
+  updateField: (field: string, value: string) => void;
+  resetForm: () => void;
 }

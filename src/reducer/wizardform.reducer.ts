@@ -45,7 +45,8 @@ export const wizardformReducer = (
           [action.payload.field]: action.payload.value,
         },
       };
-
+    case "RESET_FORM":
+      return wizardformInitialData;
     default:
       return state;
   }
