@@ -15,9 +15,9 @@ const HomeProducts = () => {
 
   return (
     <section className="bg-[#f8f5f2] py-20">
-      {/* CONTAINER */}
+      {/* container */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* SECTION HEADER */}
+        {/* section header */}
         <div className="mb-14 flex flex-col items-center text-center">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[4px] text-orange-500">
             Trending Products
@@ -33,11 +33,11 @@ const HomeProducts = () => {
           </p>
         </div>
 
-        {/* PRODUCT GRID */}
+        {/* product grid */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {ProductContext?.state?.products?.slice(0, 4)?.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       </div>
     </section>

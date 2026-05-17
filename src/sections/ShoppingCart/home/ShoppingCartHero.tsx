@@ -12,33 +12,32 @@ const ShoppingCartHero = () => {
         backgroundImage: `url(${heroImage})`,
       }}
     >
-      {/* DARK OVERLAY */}
+      {/* dark overlay */}
       <div className="absolute inset-0 bg-black/45" />
 
-      {/* CONTENT CONTAINER */}
+      {/* content container */}
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-7xl items-center px-4 py-16 sm:px-6 lg:px-8">
-        {/* LEFT CONTENT */}
+        {/* left content*/}
         <div className="max-w-2xl">
-          {/* TAG */}
+          {/* tag */}
           <div className="mb-5 flex w-fit items-center gap-2 rounded-full border border-orange-300/30 bg-orange-400/20 px-4 py-2 text-sm font-semibold text-orange-200 backdrop-blur-md">
             <ShoppingBag className="h-4 w-4" />
             New Fashion Collection
           </div>
 
-          {/* HEADING */}
+          {/* heading */}
           <h1 className="text-4xl font-black leading-tight text-white sm:text-5xl lg:text-7xl">
-            Discover Your
-            <span className="block text-orange-400">Perfect Style</span>
+            Discover Your <span className="block text-orange-400">Perfect Style</span>
           </h1>
 
-          {/* DESCRIPTION */}
+          {/* description */}
           <p className="mt-6 max-w-xl text-base leading-7 text-neutral-200 sm:text-lg">
             Elevate your wardrobe with premium fashion pieces, timeless
             accessories, and trend-driven collections crafted for modern
             lifestyles.
           </p>
 
-          {/* BUTTONS */}
+          {/* buttons */}
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <button
               onClick={() => navigate("/shoppingcart/cart")}
@@ -56,7 +55,7 @@ const ShoppingCartHero = () => {
             </button>
           </div>
 
-          {/* STATS */}
+          {/* stats */}
           <div className="mt-12 flex flex-wrap gap-8">
             <div>
               <h2 className="text-3xl font-bold text-white">500+</h2>

@@ -23,7 +23,7 @@ export interface ShoppingCartInitialDataType {
   isLoading: boolean;
   isError: string | null;
   products: ProductType[];
-  cart: CartProductType[]
+  cart: CartProductType[];
 }
 
 export interface ProductPayload {
@@ -33,14 +33,14 @@ export interface ProductPayload {
   category: string;
   price: number;
   rating: number;
-  thumbnail: string
+  thumbnail: string;
 }
 
 export interface productContexttype {
   state: ShoppingCartInitialDataType;
-  fetchProductList: ()=> Promise<any>
-  addToCart: (data: ProductPayload) => void
-  incriseQnt: (id: number) => void
-  decriseQnt: (id: number) => void
-  deleteProduct: (id: number) => void
+  fetchProductList: () => Promise<any>;
+  addToCart: (data: ProductPayload) => void;
+  incriseQnt: (id: number) => void;
+  decriseQnt: (id: number) => void;
+  deleteProduct: (id: number) => void;
 }

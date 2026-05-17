@@ -3,6 +3,6 @@ export type WizardFormAction =
   | { type: "PREVIOUS_STEP" }
   | {
       type: "UPDATE_FIELD";
-      payload: { field: string; value: string } 
+      payload: { field: string; value: string };
     }
   | { type: "RESET_FORM" };

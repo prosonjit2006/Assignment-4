@@ -35,4 +35,3 @@ export const addressDetailsInput = [
     required: false,
   },
 ];
-
