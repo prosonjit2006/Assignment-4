@@ -76,11 +76,12 @@ export default function HorizontalLinearStepper() {
               gap: 1,
               borderBottom: "1px solid #e5e7eb",
               paddingBottom: 1,
-              wordBreak: "break-word",
+              // wordBreak: "break-word",
             }}
           >
             <Typography
               sx={{
+                width: '100%',
                 fontWeight: 600,
                 fontSize: {
                   xs: "14px",
