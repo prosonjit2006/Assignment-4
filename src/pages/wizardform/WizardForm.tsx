@@ -15,7 +15,7 @@ import { toast } from "sonner";
 
 const steps = ["Personal Details", "Address", "Academic Details", "Preview"];
 
-export default function HorizontalLinearStepper() {
+const HorizontalLinearStepper = () => {
   const wizardcontext = useContext(WizardFormContext);
 
   if (!wizardcontext) {
@@ -81,7 +81,7 @@ export default function HorizontalLinearStepper() {
           >
             <Typography
               sx={{
-                width: '100%',
+                width: "100%",
                 fontWeight: 600,
                 fontSize: {
                   xs: "14px",
@@ -431,4 +431,6 @@ export default function HorizontalLinearStepper() {
       </Box>
     </Container>
   );
-}
+};
+
+export default HorizontalLinearStepper;
